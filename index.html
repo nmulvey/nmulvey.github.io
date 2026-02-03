@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sally - Systems Security Researcher</title>
+    <title>Nicole Mulvey - Systems Security Researcher</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -402,12 +402,13 @@
         <header>
             <div class="header-content">
                 <div class="logo">
-                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.2rem; color: var(--accent-primary);">S.K.</span>
+                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.2rem; color: var(--accent-primary);">N.M.</span>
                 </div>
                 <nav>
                     <a href="#research">Research</a>
                     <a href="#experience">Experience</a>
-                    <a href="#skills">Skills</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#awards">Awards</a>
                     <a href="#contact">Contact</a>
                 </nav>
             </div>
@@ -415,10 +416,10 @@
 
         <section class="hero">
             <div class="hero-content">
-                <h1>Hi, I'm <span class="gradient-text">Sally</span></h1>
-                <div class="tag-line">[ PhD Student • Systems Security Researcher ]</div>
+                <h1>Hi, I'm <span class="gradient-text">Nicole</span></h1>
+                <div class="tag-line">[ Graduate Researcher • Systems Security • RISC-V ]</div>
                 <p class="hero-description">
-                    I'm a computer science PhD student at Stanford University, working on systems security with a focus on compiler-based sandboxing and lightweight fault isolation. My research explores the intersection of hardware architectures, compilers, and runtime security.
+                    I'm a Master's student in Electrical Engineering at Stanford University, working on systems security research with a focus on compiler-based sandboxing and lightweight fault isolation for RISC-V architectures. I'm passionate about the intersection of hardware, compilers, and security.
                 </p>
             </div>
         </section>
@@ -431,30 +432,32 @@
                     <div>
                         <span class="tag">LLVM</span>
                         <span class="tag">RISC-V</span>
-                        <span class="tag">Security</span>
+                        <span class="tag">Memory Safety</span>
                     </div>
                     <p>
-                        Leading the RISC-V port of Lightweight Fault Isolation (LFI), involving extensive modifications to LLVM compiler backend and runtime sandboxing infrastructure. Presented at RISC-V Summit 2025.
+                        Leading the RISC-V port of Lightweight Fault Isolation, which enforces memory safety at the OS level through compiler-based validation. Modified LLVM's backend to generate code satisfying security invariants and built runtime sandboxing infrastructure. Presented at RISC-V Summit 2025.
                     </p>
                 </div>
                 <div class="research-card">
-                    <h3>Compiler-Based Sandboxing</h3>
+                    <h3>Carbon Emissions Analysis of AI Chips</h3>
                     <div>
-                        <span class="tag">Compiler Infrastructure</span>
-                        <span class="tag">Isolation</span>
+                        <span class="tag">Honors Thesis</span>
+                        <span class="tag">Sustainability</span>
+                        <span class="tag">Hardware</span>
                     </div>
                     <p>
-                        Developing novel approaches to software isolation through compiler transformations, focusing on performance-critical security boundaries in modern systems.
+                        Conducted an in-depth comparison between carbon emissions of digital AI chips and analog-in-memory chips. Analyzed energy consumption, environmental impacts, and efficiency, providing insights into the ecological footprint of different chip technologies.
                     </p>
                 </div>
                 <div class="research-card">
-                    <h3>Systems Security Research</h3>
+                    <h3>Solar Array Fault Detection</h3>
                     <div>
-                        <span class="tag">Low-Level Systems</span>
-                        <span class="tag">Architecture</span>
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">K-means</span>
+                        <span class="tag">ASU SenSIP</span>
                     </div>
                     <p>
-                        Exploring security mechanisms at the intersection of hardware and software, with emphasis on practical implementations for real-world systems.
+                        Developed a machine learning program using K-means algorithm capable of detecting 9 different faults in solar panels. Collaborated with a team to build a computer-controlled load for solar array experiments.
                     </p>
                 </div>
             </div>
@@ -464,60 +467,115 @@
             <h2 class="section-title">Experience</h2>
             <div class="timeline">
                 <div class="timeline-item">
-                    <h3>Graduate Researcher</h3>
-                    <div class="company">Secure Computer Systems Group • Stanford University</div>
-                    <div class="date">2024 - Present</div>
-                    <p>Working with Professor David Mazières on systems security research, focusing on RISC-V port of Lightweight Fault Isolation and compiler-based sandboxing techniques.</p>
+                    <h3>Graduate Research Assistant</h3>
+                    <div class="company">Stanford Secure Computer Systems Group</div>
+                    <div class="date">June 2025 - Present</div>
+                    <p>Leading the RISC-V port of Lightweight Fault Isolation. Modified LLVM's backend to generate secure code, implemented argument enforcement for compressed instructions, and built runtime sandboxing infrastructure including boundary crossings and system call mediation.</p>
                 </div>
                 <div class="timeline-item">
-                    <h3>Graduate Teaching Assistant</h3>
-                    <div class="company">Stanford University</div>
-                    <div class="date">2024 - Present</div>
-                    <p>Teaching assistant for Digital System Design (EE 108) and Matrix Methods (ENGR 108), supporting students in understanding complex technical concepts.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Security Engineering Intern</h3>
-                    <div class="company">Tesla</div>
-                    <div class="date">Previous</div>
-                    <p>Worked on automotive security processors and telematics, developing secure embedded systems for vehicle communications.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Software Engineering Intern</h3>
+                    <h3>Software Engineer Intern</h3>
                     <div class="company">IBM</div>
-                    <div class="date">Previous</div>
-                    <p>Developed AI chatbots and worked on machine learning infrastructure for enterprise applications.</p>
+                    <div class="date">May 2024 - August 2024</div>
+                    <p>Developed DBA Assist, an advanced AI chatbot using Python, HuggingFace, and Llama 3, seamlessly integrating with IBM DB2. Achieved a 20% reduction in processing time and showcased to Senior VPs of Software and CEO of GEM Fellowship.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Low Voltage Test Engineer Intern</h3>
+                    <div class="company">Tesla</div>
+                    <div class="date">February 2024 - May 2024</div>
+                    <p>Conducted setup and integration testing for a telematics processor with WiFi, Bluetooth, and Cellular chips. Created Python tests to enhance coverage for CAN transceivers in Tesla's Autopilot computer, identifying manufacturing issues.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Digital Design Engineer Intern</h3>
+                    <div class="company">Texas Instruments</div>
+                    <div class="date">May 2023 - August 2023</div>
+                    <p>Contributed to over 30 test benches, significantly improving debugging and system performance of a temperature sensor. Authored a detailed verification plan to identify potential issues early in chip development.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Facilities Engineer Intern</h3>
+                    <div class="company">Texas Instruments</div>
+                    <div class="date">May 2022 - August 2022</div>
+                    <p>Converted DIW Loop and Hot DIW Particle Monitors to Wago PLC using Codeseys. Analyzed voltage sag impact on tools, determining corrective actions that led to over $2.2 million in savings.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Control Engineer Intern</h3>
+                    <div class="company">General Motors</div>
+                    <div class="date">May 2021 - August 2021</div>
+                    <p>Utilized PLC to integrate a new VFD system and convert from Logix5 to Logix5000 in one month. Created a program to time-sync ASH houses in General Assembly.</p>
                 </div>
             </div>
         </section>
 
-        <section id="skills">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-container">
-                <div class="skill-pill">C/C++</div>
-                <div class="skill-pill">Python</div>
-                <div class="skill-pill">LLVM</div>
-                <div class="skill-pill">RISC-V</div>
-                <div class="skill-pill">SystemVerilog</div>
-                <div class="skill-pill">Compiler Infrastructure</div>
-                <div class="skill-pill">Systems Programming</div>
-                <div class="skill-pill">Security Research</div>
-                <div class="skill-pill">Digital Design</div>
-                <div class="skill-pill">Network Protocols</div>
-                <div class="skill-pill">Operating Systems</div>
-                <div class="skill-pill">Machine Learning</div>
+        <section id="projects">
+            <h2 class="section-title">Selected Projects</h2>
+            <div class="research-grid">
+                <div class="research-card">
+                    <h3>Pintos Operating System</h3>
+                    <div>
+                        <span class="tag">C</span>
+                        <span class="tag">OS Development</span>
+                        <span class="tag">Stanford</span>
+                    </div>
+                    <p>
+                        Developed core operating system components including threading, synchronization, user programs, virtual memory, and file systems in C.
+                    </p>
+                </div>
+                <div class="research-card">
+                    <h3>Bare-Metal RISC-V Computer</h3>
+                    <div>
+                        <span class="tag">RISC-V Assembly</span>
+                        <span class="tag">Embedded Systems</span>
+                    </div>
+                    <p>
+                        Built a bare-metal RISC-V system on a Mango Pi from scratch, mastering assembly language, memory management, and peripheral control. Developed a custom C-based shell for a fully functional personal computer.
+                    </p>
+                </div>
+                <div class="research-card">
+                    <h3>Python UI for VMM2 Chip</h3>
+                    <div>
+                        <span class="tag">Python Flask</span>
+                        <span class="tag">Sandia National Labs</span>
+                    </div>
+                    <p>
+                        Collaborated in a team of four to create a Python Flask app and HTML interface for researchers at Sandia National Laboratories. Achieved functional proof of concept for device conductance measurement toward neural network deployment.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="awards">
+            <h2 class="section-title">Awards & Recognition</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Impact Award</h3>
+                    <div class="company">Fulton Schools of Engineering, Arizona State University</div>
+                    <div class="date">2023</div>
+                    <p>Recognized for outstanding impact in the engineering community.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Outstanding Graduate Award</h3>
+                    <div class="company">Fulton Schools of Engineering, Arizona State University</div>
+                    <div class="date">2023</div>
+                    <p>Awarded for exceptional academic achievement and contributions to electrical engineering.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Selected for Philosophy Conference</h3>
+                    <div class="company">Arizona State University</div>
+                    <div class="date">2019</div>
+                    <p>Selected from 30 students to present research paper on computer cognition.</p>
+                </div>
             </div>
         </section>
 
         <section id="contact">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-links">
-                <a href="https://github.com/yourusername" class="contact-link" target="_blank">
+                <a href="https://github.com/nmulvey" class="contact-link" target="_blank">
                     <span>→</span> GitHub
                 </a>
-                <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">
+                <a href="https://linkedin.com/in/nicole-mulvey" class="contact-link" target="_blank">
                     <span>→</span> LinkedIn
                 </a>
-                <a href="mailto:your.email@stanford.edu" class="contact-link">
+                <a href="mailto:nmulvey12@gmail.com" class="contact-link">
                     <span>→</span> Email
                 </a>
                 <a href="#" class="contact-link">
@@ -527,8 +585,4 @@
         </section>
 
         <footer>
-            <p>© 2026 Sally. Built with passion for systems security.</p>
-        </footer>
-    </div>
-</body>
-</html>
+            <p>© 2026 Nicole Mulvey. Built with passion for systems security.</p>
