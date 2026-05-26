@@ -36,26 +36,14 @@
 
                 <p class="page-intro">
                     One of my long-term goals is to visit every national park in the United States.
-                    The bright trees are parks I’ve visited so far, and the darker trees are still on my list.
+                    This is a running list of the parks I’ve visited so far.
                 </p>
 
-                <div class="parks-summary">
+                <div class="misc-card">
+                    <h3>Visited Parks</h3>
                     <div class="misc-meta" id="parks-count"></div>
-
-                    <div class="legend">
-                        <div class="legend-item">
-                            <span class="legend-tree visited-tree">▲</span>
-                            <span>Visited</span>
-                        </div>
-
-                        <div class="legend-item">
-                            <span class="legend-tree not-visited-tree">▲</span>
-                            <span>Not visited yet</span>
-                        </div>
-                    </div>
+                    <ul class="parks-list plain-parks-list" id="parks-list"></ul>
                 </div>
-
-                <div class="tree-grid" id="tree-grid"></div>
             </section>
         </main>
 
@@ -65,99 +53,29 @@
     </div>
 
     <script>
-        const parks = [
-            { name: "Acadia", url: "https://www.nps.gov/acad/index.htm", visited: false },
-            { name: "American Samoa", url: "https://www.nps.gov/npsa/index.htm", visited: false },
-            { name: "Arches", url: "https://www.nps.gov/arch/index.htm", visited: true },
-            { name: "Badlands", url: "https://www.nps.gov/badl/index.htm", visited: false },
-            { name: "Big Bend", url: "https://www.nps.gov/bibe/index.htm", visited: false },
-            { name: "Biscayne", url: "https://www.nps.gov/bisc/index.htm", visited: false },
-            { name: "Black Canyon of the Gunnison", url: "https://www.nps.gov/blca/index.htm", visited: false },
-            { name: "Bryce Canyon", url: "https://www.nps.gov/brca/index.htm", visited: true },
-            { name: "Canyonlands", url: "https://www.nps.gov/cany/index.htm", visited: true },
-            { name: "Capitol Reef", url: "https://www.nps.gov/care/index.htm", visited: false },
-            { name: "Carlsbad Caverns", url: "https://www.nps.gov/cave/index.htm", visited: false },
-            { name: "Channel Islands", url: "https://www.nps.gov/chis/index.htm", visited: false },
-            { name: "Congaree", url: "https://www.nps.gov/cong/index.htm", visited: false },
-            { name: "Crater Lake", url: "https://www.nps.gov/crla/index.htm", visited: false },
-            { name: "Cuyahoga Valley", url: "https://www.nps.gov/cuva/index.htm", visited: false },
-            { name: "Death Valley", url: "https://www.nps.gov/deva/index.htm", visited: false },
-            { name: "Denali", url: "https://www.nps.gov/dena/index.htm", visited: false },
-            { name: "Dry Tortugas", url: "https://www.nps.gov/drto/index.htm", visited: false },
-            { name: "Everglades", url: "https://www.nps.gov/ever/index.htm", visited: false },
-            { name: "Gates of the Arctic", url: "https://www.nps.gov/gaar/index.htm", visited: false },
-            { name: "Gateway Arch", url: "https://www.nps.gov/jeff/index.htm", visited: false },
-            { name: "Glacier", url: "https://www.nps.gov/glac/index.htm", visited: false },
-            { name: "Glacier Bay", url: "https://www.nps.gov/glba/index.htm", visited: false },
-            { name: "Grand Canyon", url: "https://www.nps.gov/grca/index.htm", visited: true },
-            { name: "Grand Teton", url: "https://www.nps.gov/grte/index.htm", visited: true },
-            { name: "Great Basin", url: "https://www.nps.gov/grba/index.htm", visited: false },
-            { name: "Great Sand Dunes", url: "https://www.nps.gov/grsa/index.htm", visited: false },
-            { name: "Great Smoky Mountains", url: "https://www.nps.gov/grsm/index.htm", visited: false },
-            { name: "Guadalupe Mountains", url: "https://www.nps.gov/gumo/index.htm", visited: false },
-            { name: "Haleakalā", url: "https://www.nps.gov/hale/index.htm", visited: false },
-            { name: "Hawaiʻi Volcanoes", url: "https://www.nps.gov/havo/index.htm", visited: false },
-            { name: "Hot Springs", url: "https://www.nps.gov/hosp/index.htm", visited: false },
-            { name: "Indiana Dunes", url: "https://www.nps.gov/indu/index.htm", visited: false },
-            { name: "Isle Royale", url: "https://www.nps.gov/isro/index.htm", visited: false },
-            { name: "Joshua Tree", url: "https://www.nps.gov/jotr/index.htm", visited: false },
-            { name: "Katmai", url: "https://www.nps.gov/katm/index.htm", visited: false },
-            { name: "Kenai Fjords", url: "https://www.nps.gov/kefj/index.htm", visited: false },
-            { name: "Kings Canyon", url: "https://www.nps.gov/seki/index.htm", visited: false },
-            { name: "Kobuk Valley", url: "https://www.nps.gov/kova/index.htm", visited: false },
-            { name: "Lake Clark", url: "https://www.nps.gov/lacl/index.htm", visited: false },
-            { name: "Lassen Volcanic", url: "https://www.nps.gov/lavo/index.htm", visited: false },
-            { name: "Mammoth Cave", url: "https://www.nps.gov/maca/index.htm", visited: false },
-            { name: "Mesa Verde", url: "https://www.nps.gov/meve/index.htm", visited: false },
-            { name: "Mount Rainier", url: "https://www.nps.gov/mora/index.htm", visited: true },
-            { name: "New River Gorge", url: "https://www.nps.gov/neri/index.htm", visited: false },
-            { name: "North Cascades", url: "https://www.nps.gov/noca/index.htm", visited: false },
-            { name: "Olympic", url: "https://www.nps.gov/olym/index.htm", visited: true },
-            { name: "Petrified Forest", url: "https://www.nps.gov/pefo/index.htm", visited: false },
-            { name: "Pinnacles", url: "https://www.nps.gov/pinn/index.htm", visited: false },
-            { name: "Redwood", url: "https://www.nps.gov/redw/index.htm", visited: false },
-            { name: "Rocky Mountain", url: "https://www.nps.gov/romo/index.htm", visited: true },
-            { name: "Saguaro", url: "https://www.nps.gov/sagu/index.htm", visited: false },
-            { name: "Sequoia", url: "https://www.nps.gov/seki/index.htm", visited: false },
-            { name: "Shenandoah", url: "https://www.nps.gov/shen/index.htm", visited: false },
-            { name: "Theodore Roosevelt", url: "https://www.nps.gov/thro/index.htm", visited: false },
-            { name: "Virgin Islands", url: "https://www.nps.gov/viis/index.htm", visited: false },
-            { name: "Voyageurs", url: "https://www.nps.gov/voya/index.htm", visited: false },
-            { name: "White Sands", url: "https://www.nps.gov/whsa/index.htm", visited: false },
-            { name: "Wind Cave", url: "https://www.nps.gov/wica/index.htm", visited: false },
-            { name: "Wrangell-St. Elias", url: "https://www.nps.gov/wrst/index.htm", visited: false },
-            { name: "Yellowstone", url: "https://www.nps.gov/yell/index.htm", visited: true },
-            { name: "Yosemite", url: "https://www.nps.gov/yose/index.htm", visited: true },
-            { name: "Zion", url: "https://www.nps.gov/zion/index.htm", visited: true }
+        const visitedParks = [
+            "Arches",
+            "Bryce Canyon",
+            "Canyonlands",
+            "Grand Canyon",
+            "Grand Teton",
+            "Mount Rainier",
+            "Olympic",
+            "Rocky Mountain",
+            "Yellowstone",
+            "Yosemite",
+            "Zion"
         ];
 
-        const treeGrid = document.getElementById("tree-grid");
+        const parksList = document.getElementById("parks-list");
         const parksCount = document.getElementById("parks-count");
 
-        const visitedCount = parks.filter(park => park.visited).length;
-        parksCount.textContent = `${visitedCount} of ${parks.length} national parks visited`;
+        parksCount.textContent = `${visitedParks.length} parks visited`;
 
-        parks.forEach(park => {
-            const card = document.createElement("a");
-
-            card.href = park.url;
-            card.target = "_blank";
-            card.rel = "noopener noreferrer";
-            card.className = park.visited ? "tree-card visited" : "tree-card";
-
-            card.innerHTML = `
-                <div class="tree-shape">
-                    <span class="tree-layer tree-layer-1">▲</span>
-                    <span class="tree-layer tree-layer-2">▲</span>
-                    <span class="tree-layer tree-layer-3">▲</span>
-                    <span class="tree-base"></span>
-                </div>
-
-                <div class="tree-card-title">${park.name}</div>
-                <div class="tree-card-status">${park.visited ? "Visited" : "Not visited yet"}</div>
-            `;
-
-            treeGrid.appendChild(card);
+        visitedParks.forEach(park => {
+            const li = document.createElement("li");
+            li.textContent = park;
+            parksList.appendChild(li);
         });
     </script>
 </body>
