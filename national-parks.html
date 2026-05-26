@@ -10,13 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-
-    <!-- Leaflet map CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
 
 <body>
-    <div class="container">
+    <div class="container wide-container">
         <header>
             <div class="header-content">
                 <div class="logo">
@@ -45,12 +42,62 @@
                 <div class="misc-card">
                     <h3>Visited Parks</h3>
                     <div class="misc-meta" id="parks-count"></div>
-                    <ul class="parks-list" id="parks-list"></ul>
+                    <ul class="parks-list" id="visited-parks-list"></ul>
                 </div>
 
-                <div class="misc-card">
-                    <h3>Map</h3>
-                    <div id="parks-map"></div>
+                <div class="misc-card map-card">
+                    <h3>USA National Parks Map</h3>
+
+                    <div class="poster-map">
+                        <div class="poster-title">USA National Parks</div>
+
+                        <svg class="usa-map-base" viewBox="0 0 1000 610" preserveAspectRatio="xMidYMid meet" aria-label="Stylized USA national parks map">
+                            <path class="main-us"
+                                d="M83 168 L125 104 L218 127 L315 134 L417 149 L532 153 L644 166 L745 150 L875 188 L941 251 L909 340 L810 394 L711 421 L604 402 L507 425 L408 404 L314 435 L220 403 L132 410 L69 337 L55 245 Z" />
+
+                            <path class="alaska"
+                                d="M72 472 L135 438 L203 458 L238 511 L184 565 L102 551 L41 517 Z" />
+
+                            <path class="hawaii"
+                                d="M365 535 C376 526 392 529 397 542 C388 553 374 550 365 535 Z
+                                   M420 555 C432 548 444 552 448 565 C436 574 425 569 420 555 Z
+                                   M476 568 C487 563 500 569 501 581 C488 588 479 581 476 568 Z" />
+
+                            <g class="state-lines">
+                                <path d="M145 118 L154 398" />
+                                <path d="M236 131 L221 409" />
+                                <path d="M335 142 L319 424" />
+                                <path d="M438 151 L426 410" />
+                                <path d="M548 155 L536 414" />
+                                <path d="M653 165 L655 405" />
+                                <path d="M758 158 L747 386" />
+                                <path d="M858 202 L807 394" />
+
+                                <path d="M87 210 L905 232" />
+                                <path d="M70 286 L918 302" />
+                                <path d="M104 353 L826 370" />
+
+                                <path d="M178 128 L235 208 L210 303 L258 405" />
+                                <path d="M291 136 L353 234 L334 322 L399 407" />
+                                <path d="M500 154 L562 245 L544 335 L604 401" />
+                                <path d="M702 160 L733 253 L705 330 L746 386" />
+                            </g>
+                        </svg>
+
+                        <div id="park-markers"></div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <span class="legend-tree visited-tree">▲</span>
+                            <span>Visited</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-tree not-visited-tree">▲</span>
+                            <span>Not visited yet</span>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
@@ -60,85 +107,84 @@
         </footer>
     </div>
 
-    <!-- Leaflet map JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
     <script>
-        const nationalParks = [
-            {
-                name: "Yosemite",
-                url: "https://www.nps.gov/yose/index.htm",
-                lat: 37.8651,
-                lng: -119.5383
-            },
-            {
-                name: "Grand Canyon",
-                url: "https://www.nps.gov/grca/index.htm",
-                lat: 36.1069,
-                lng: -112.1129
-            },
-            {
-                name: "Zion",
-                url: "https://www.nps.gov/zion/index.htm",
-                lat: 37.2982,
-                lng: -113.0263
-            },
-            {
-                name: "Bryce Canyon",
-                url: "https://www.nps.gov/brca/index.htm",
-                lat: 37.5930,
-                lng: -112.1871
-            },
-            {
-                name: "Arches",
-                url: "https://www.nps.gov/arch/index.htm",
-                lat: 38.7331,
-                lng: -109.5925
-            },
-            {
-                name: "Canyonlands",
-                url: "https://www.nps.gov/cany/index.htm",
-                lat: 38.3269,
-                lng: -109.8783
-            },
-            {
-                name: "Rocky Mountain",
-                url: "https://www.nps.gov/romo/index.htm",
-                lat: 40.3428,
-                lng: -105.6836
-            },
-            {
-                name: "Grand Teton",
-                url: "https://www.nps.gov/grte/index.htm",
-                lat: 43.7904,
-                lng: -110.6818
-            },
-            {
-                name: "Yellowstone",
-                url: "https://www.nps.gov/yell/index.htm",
-                lat: 44.4280,
-                lng: -110.5885
-            },
-            {
-                name: "Olympic",
-                url: "https://www.nps.gov/olym/index.htm",
-                lat: 47.8021,
-                lng: -123.6044
-            },
-            {
-                name: "Mount Rainier",
-                url: "https://www.nps.gov/mora/index.htm",
-                lat: 46.8523,
-                lng: -121.7603
-            }
+        const parks = [
+            { name: "Olympic", url: "https://www.nps.gov/olym/index.htm", visited: true, x: 8, y: 15 },
+            { name: "Mount Rainier", url: "https://www.nps.gov/mora/index.htm", visited: true, x: 12, y: 21 },
+            { name: "North Cascades", url: "https://www.nps.gov/noca/index.htm", visited: false, x: 15, y: 13 },
+            { name: "Glacier", url: "https://www.nps.gov/glac/index.htm", visited: false, x: 33, y: 20 },
+            { name: "Yellowstone", url: "https://www.nps.gov/yell/index.htm", visited: true, x: 33, y: 31 },
+            { name: "Grand Teton", url: "https://www.nps.gov/grte/index.htm", visited: true, x: 34, y: 35 },
+            { name: "Theodore Roosevelt", url: "https://www.nps.gov/thro/index.htm", visited: false, x: 48, y: 28 },
+            { name: "Voyageurs", url: "https://www.nps.gov/voya/index.htm", visited: false, x: 63, y: 22 },
+            { name: "Isle Royale", url: "https://www.nps.gov/isro/index.htm", visited: false, x: 69, y: 25 },
+
+            { name: "Redwood", url: "https://www.nps.gov/redw/index.htm", visited: false, x: 9, y: 37 },
+            { name: "Lassen Volcanic", url: "https://www.nps.gov/lavo/index.htm", visited: false, x: 13, y: 43 },
+            { name: "Yosemite", url: "https://www.nps.gov/yose/index.htm", visited: true, x: 15, y: 50 },
+            { name: "Kings Canyon", url: "https://www.nps.gov/seki/index.htm", visited: false, x: 16, y: 55 },
+            { name: "Sequoia", url: "https://www.nps.gov/seki/index.htm", visited: false, x: 15, y: 59 },
+            { name: "Pinnacles", url: "https://www.nps.gov/pinn/index.htm", visited: false, x: 12, y: 56 },
+            { name: "Channel Islands", url: "https://www.nps.gov/chis/index.htm", visited: false, x: 13, y: 69 },
+            { name: "Joshua Tree", url: "https://www.nps.gov/jotr/index.htm", visited: false, x: 19, y: 66 },
+            { name: "Death Valley", url: "https://www.nps.gov/deva/index.htm", visited: false, x: 20, y: 57 },
+
+            { name: "Crater Lake", url: "https://www.nps.gov/crla/index.htm", visited: false, x: 15, y: 33 },
+            { name: "Great Basin", url: "https://www.nps.gov/grba/index.htm", visited: false, x: 24, y: 51 },
+            { name: "Zion", url: "https://www.nps.gov/zion/index.htm", visited: true, x: 27, y: 58 },
+            { name: "Bryce Canyon", url: "https://www.nps.gov/brca/index.htm", visited: true, x: 29, y: 56 },
+            { name: "Capitol Reef", url: "https://www.nps.gov/care/index.htm", visited: false, x: 32, y: 54 },
+            { name: "Arches", url: "https://www.nps.gov/arch/index.htm", visited: true, x: 35, y: 50 },
+            { name: "Canyonlands", url: "https://www.nps.gov/cany/index.htm", visited: true, x: 34, y: 55 },
+            { name: "Grand Canyon", url: "https://www.nps.gov/grca/index.htm", visited: true, x: 29, y: 64 },
+            { name: "Petrified Forest", url: "https://www.nps.gov/pefo/index.htm", visited: false, x: 34, y: 67 },
+            { name: "Saguaro", url: "https://www.nps.gov/sagu/index.htm", visited: false, x: 31, y: 77 },
+
+            { name: "Rocky Mountain", url: "https://www.nps.gov/romo/index.htm", visited: true, x: 43, y: 47 },
+            { name: "Black Canyon", url: "https://www.nps.gov/blca/index.htm", visited: false, x: 43, y: 55 },
+            { name: "Mesa Verde", url: "https://www.nps.gov/meve/index.htm", visited: false, x: 41, y: 62 },
+            { name: "Great Sand Dunes", url: "https://www.nps.gov/grsa/index.htm", visited: false, x: 47, y: 60 },
+            { name: "White Sands", url: "https://www.nps.gov/whsa/index.htm", visited: false, x: 45, y: 76 },
+            { name: "Carlsbad Caverns", url: "https://www.nps.gov/cave/index.htm", visited: false, x: 50, y: 78 },
+            { name: "Guadalupe Mountains", url: "https://www.nps.gov/gumo/index.htm", visited: false, x: 52, y: 75 },
+            { name: "Big Bend", url: "https://www.nps.gov/bibe/index.htm", visited: false, x: 56, y: 85 },
+
+            { name: "Badlands", url: "https://www.nps.gov/badl/index.htm", visited: false, x: 51, y: 37 },
+            { name: "Wind Cave", url: "https://www.nps.gov/wica/index.htm", visited: false, x: 49, y: 42 },
+            { name: "Gateway Arch", url: "https://www.nps.gov/jeff/index.htm", visited: false, x: 67, y: 55 },
+            { name: "Indiana Dunes", url: "https://www.nps.gov/indu/index.htm", visited: false, x: 72, y: 45 },
+            { name: "Mammoth Cave", url: "https://www.nps.gov/maca/index.htm", visited: false, x: 75, y: 58 },
+            { name: "Hot Springs", url: "https://www.nps.gov/hosp/index.htm", visited: false, x: 67, y: 68 },
+
+            { name: "Cuyahoga Valley", url: "https://www.nps.gov/cuva/index.htm", visited: false, x: 79, y: 43 },
+            { name: "Shenandoah", url: "https://www.nps.gov/shen/index.htm", visited: false, x: 84, y: 53 },
+            { name: "New River Gorge", url: "https://www.nps.gov/neri/index.htm", visited: false, x: 80, y: 57 },
+            { name: "Great Smoky Mountains", url: "https://www.nps.gov/grsm/index.htm", visited: false, x: 78, y: 64 },
+            { name: "Congaree", url: "https://www.nps.gov/cong/index.htm", visited: false, x: 84, y: 72 },
+            { name: "Everglades", url: "https://www.nps.gov/ever/index.htm", visited: false, x: 83, y: 91 },
+            { name: "Biscayne", url: "https://www.nps.gov/bisc/index.htm", visited: false, x: 88, y: 90 },
+            { name: "Dry Tortugas", url: "https://www.nps.gov/drto/index.htm", visited: false, x: 80, y: 94 },
+            { name: "Acadia", url: "https://www.nps.gov/acad/index.htm", visited: false, x: 91, y: 30 },
+
+            { name: "Haleakalā", url: "https://www.nps.gov/hale/index.htm", visited: false, x: 44, y: 88 },
+            { name: "Hawaiʻi Volcanoes", url: "https://www.nps.gov/havo/index.htm", visited: false, x: 46, y: 93 },
+
+            { name: "Denali", url: "https://www.nps.gov/dena/index.htm", visited: false, x: 13, y: 89 },
+            { name: "Gates of the Arctic", url: "https://www.nps.gov/gaar/index.htm", visited: false, x: 14, y: 82 },
+            { name: "Katmai", url: "https://www.nps.gov/katm/index.htm", visited: false, x: 10, y: 97 },
+            { name: "Kenai Fjords", url: "https://www.nps.gov/kefj/index.htm", visited: false, x: 16, y: 94 },
+            { name: "Glacier Bay", url: "https://www.nps.gov/glba/index.htm", visited: false, x: 23, y: 97 },
+            { name: "Wrangell-St. Elias", url: "https://www.nps.gov/wrst/index.htm", visited: false, x: 23, y: 90 }
         ];
 
-        const parksList = document.getElementById("parks-list");
+        const visitedParks = parks.filter(park => park.visited);
+        const parksList = document.getElementById("visited-parks-list");
         const parksCount = document.getElementById("parks-count");
+        const parkMarkers = document.getElementById("park-markers");
 
-        parksCount.textContent = `${nationalParks.length} parks visited`;
+        parksCount.textContent = `${visitedParks.length} parks visited`;
 
-        nationalParks.forEach(park => {
+        visitedParks.forEach(park => {
             const li = document.createElement("li");
             const link = document.createElement("a");
 
@@ -151,17 +197,24 @@
             parksList.appendChild(li);
         });
 
-        const map = L.map("parks-map").setView([39.5, -98.35], 4);
+        parks.forEach(park => {
+            const marker = document.createElement("a");
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            maxZoom: 18,
-            attribution: "&copy; OpenStreetMap contributors"
-        }).addTo(map);
+            marker.href = park.url;
+            marker.target = "_blank";
+            marker.rel = "noopener noreferrer";
+            marker.className = park.visited ? "park-tree visited" : "park-tree";
+            marker.style.left = `${park.x}%`;
+            marker.style.top = `${park.y}%`;
+            marker.title = park.name;
 
-        nationalParks.forEach(park => {
-            L.marker([park.lat, park.lng])
-                .addTo(map)
-                .bindPopup(`<a href="${park.url}" target="_blank" rel="noopener noreferrer">${park.name}</a>`);
+            marker.innerHTML = `
+                <span class="tree-top">▲</span>
+                <span class="tree-trunk"></span>
+                <span class="park-label">${park.name}</span>
+            `;
+
+            parkMarkers.appendChild(marker);
         });
     </script>
 </body>
