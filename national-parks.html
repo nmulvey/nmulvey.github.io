@@ -53,34 +53,35 @@
     </div>
 
     <script>
-    const visitedParks = [
-        "Arches",
-        "Bryce Canyon",
-        "Capitol Reef",
-        "Zion",
-        "White Sands",
-        "Grand Canyon",
-        "Petrified Forest",
-        "Redwood",
-        "Sequoia",
-        "Channel Islands",
-        "Joshua Tree",
-        "Pinnacles",
-        "Yosemite",
-        "Death Valley",
-        "Kings Canyon"
-    ];
+        const visitedParks = [
+            "Arches",
+            "Bryce Canyon",
+            "Capitol Reef",
+            "Channel Islands",
+            "Death Valley",
+            "Grand Canyon",
+            "Joshua Tree",
+            "Kings Canyon",
+            "Petrified Forest",
+            "Pinnacles",
+            "Redwood",
+            "Sequoia",
+            "White Sands",
+            "Yosemite",
+            "Zion"
+        ];
 
-    const parksList = document.getElementById("parks-list");
-    const parksCount = document.getElementById("parks-count");
+        const parksList = document.getElementById("parks-list");
+        const parksCount = document.getElementById("parks-count");
 
-    parksCount.textContent = `${visitedParks.length} parks visited`;
+        const parkWord = visitedParks.length === 1 ? "park" : "parks";
+        parksCount.textContent = `${visitedParks.length} ${parkWord} visited`;
 
-    visitedParks.forEach(park => {
-        const li = document.createElement("li");
-        li.textContent = park;
-        parksList.appendChild(li);
-    });
-</script>
+        visitedParks.forEach(park => {
+            const li = document.createElement("li");
+            li.textContent = park;
+            parksList.appendChild(li);
+        });
+    </script>
 </body>
 </html>
