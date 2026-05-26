@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misc - Nicole Mulvey</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- jsVectorMap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">N.M.</a>
+                </div>
+
+                <nav>
+                    <a href="background.html">Background</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="experience.html">Experience</a>
+                    <a href="awards.html">Awards</a>
+                    <a href="misc.html" class="active">Misc</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section>
+                <h2 class="section-title">Misc</h2>
+                <p class="page-intro">
+                    A few fun things outside of research — places I’ve been and other personal interests.
+                </p>
+
+                <div class="misc-grid">
+                    <div class="misc-card">
+                        <h3>National Parks I’ve Visited</h3>
+                        <div class="misc-meta" id="parks-count"></div>
+                        <ul class="parks-list" id="parks-list"></ul>
+                    </div>
+
+                    <div class="misc-card">
+                        <h3>Countries I’ve Visited</h3>
+                        <div class="misc-meta" id="countries-count"></div>
+
+                        <div class="map-wrapper">
+                            <div id="world-map"></div>
+
+                            <div class="legend">
+                                <div class="legend-item">
+                                    <span class="legend-color legend-visited"></span>
+                                    <span>Visited</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color legend-not-visited"></span>
+                                    <span>Not visited</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="country-list" id="country-list"></ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 Nicole Mulvey. Built with care.</p>
+        </footer>
+    </div>
+
+    <!-- jsVectorMap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
+
+    <script>
+        // ----------------------------
+        // EDIT THESE LISTS
+        // ----------------------------
+        const nationalParks = [
+            "Yosemite",
+            "Grand Canyon",
+            "Zion",
+            "Bryce Canyon",
+            "Arches",
+            "Canyonlands",
+            "Rocky Mountain",
+            "Banff",
+            "Grand Teton",
+            "Yellowstone",
+            "Olympic",
+            "Mount Rainier"
+        ];
+
+        // Use ISO 2-letter country codes
+        const visitedCountries = {
+            US: "United States",
+            CA: "Canada",
+            MX: "Mexico"
+            // Example:
+            // FR: "France",
+            // IT: "Italy",
+            // JP: "Japan"
+        };
+
+        // ----------------------------
+        // Render National Parks list
+        // ----------------------------
+        const parksList = document.getElementById("parks-list");
+        const parksCount = document.getElementById("parks-count");
+
+        parksCount.textContent = `${nationalParks.length} parks visited`;
+
+        nationalParks.forEach(park => {
+            const li = document.createElement("li");
+            li.textContent = park;
+            parksList.appendChild(li);
+        });
+
+        // ----------------------------
+        // Render country list
+        // ----------------------------
+        const countryList = document.getElementById("country-list");
+        const countriesCount = document.getElementById("countries-count");
+
+        const countryNames = Object.values(visitedCountries).sort();
+        countriesCount.textContent = `${countryNames.length} countries visited`;
+
+        countryNames.forEach(country => {
+            const li = document.createElement("li");
+            li.textContent = country;
+            countryList.appendChild(li);
+        });
+
+        // ----------------------------
+        // Build map coloring
+        // ----------------------------
+        const visitedMapValues = {};
+        Object.keys(visitedCountries).forEach(code => {
+            visitedMapValues[code] = 1;
+        });
+
+        new jsVectorMap({
+            selector: "#world-map",
+            map: "world",
+            zoomButtons: true,
+            regionStyle: {
+                initial: {
+                    fill: "#2a3340",
+                    stroke: "#111827",
+                    strokeWidth: 1
+                },
+                hover: {
+                    fill: "#ff6b9d"
+                }
+            },
+            series: {
+                regions: [{
+                    attribute: "fill",
+                    values: visitedMapValues,
+                    scale: {
+                        1: "#4ecdc4"
+                    }
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
