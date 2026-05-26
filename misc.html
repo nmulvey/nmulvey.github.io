@@ -10,8 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css">
 </head>
 
 <body>
@@ -36,39 +34,18 @@
             <section>
                 <h2 class="section-title">Misc</h2>
 
-                <p class="page-intro">
-                    A few fun things outside of research — places I’ve been and other personal interests.
-                </p>
-
-                <div class="misc-grid">
-                    <div class="misc-card">
+                <div class="misc-link-grid">
+                    <a href="national-parks.html" class="misc-big-link">
                         <h3>National Parks I’ve Visited</h3>
-                        <div class="misc-meta" id="parks-count"></div>
-                        <ul class="parks-list" id="parks-list"></ul>
-                    </div>
+                        <p>My goal is to visit every national park in the United States.</p>
+                        <span>View map →</span>
+                    </a>
 
-                    <div class="misc-card">
+                    <a href="countries.html" class="misc-big-link">
                         <h3>Countries I’ve Visited</h3>
-                        <div class="misc-meta" id="countries-count"></div>
-
-                        <div class="map-wrapper">
-                            <div id="world-map"></div>
-
-                            <div class="legend">
-                                <div class="legend-item">
-                                    <span class="legend-color legend-visited"></span>
-                                    <span>Visited</span>
-                                </div>
-
-                                <div class="legend-item">
-                                    <span class="legend-color legend-not-visited"></span>
-                                    <span>Not visited</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <ul class="country-list" id="country-list"></ul>
-                    </div>
+                        <p>A map of countries I’ve traveled to so far.</p>
+                        <span>View map →</span>
+                    </a>
                 </div>
             </section>
         </main>
@@ -77,154 +54,5 @@
             <p>© 2026 Nicole Mulvey. Built with care.</p>
         </footer>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const nationalParks = [
-                {
-                    name: "Yosemite",
-                    url: "https://www.nps.gov/yose/index.htm"
-                },
-                {
-                    name: "Grand Canyon",
-                    url: "https://www.nps.gov/grca/index.htm"
-                },
-                {
-                    name: "Zion",
-                    url: "https://www.nps.gov/zion/index.htm"
-                },
-                {
-                    name: "Bryce Canyon",
-                    url: "https://www.nps.gov/brca/index.htm"
-                },
-                {
-                    name: "Arches",
-                    url: "https://www.nps.gov/arch/index.htm"
-                },
-                {
-                    name: "Canyonlands",
-                    url: "https://www.nps.gov/cany/index.htm"
-                },
-                {
-                    name: "Rocky Mountain",
-                    url: "https://www.nps.gov/romo/index.htm"
-                },
-                {
-                    name: "Banff",
-                    url: "https://parks.canada.ca/pn-np/ab/banff"
-                },
-                {
-                    name: "Grand Teton",
-                    url: "https://www.nps.gov/grte/index.htm"
-                },
-                {
-                    name: "Yellowstone",
-                    url: "https://www.nps.gov/yell/index.htm"
-                },
-                {
-                    name: "Olympic",
-                    url: "https://www.nps.gov/olym/index.htm"
-                },
-                {
-                    name: "Mount Rainier",
-                    url: "https://www.nps.gov/mora/index.htm"
-                }
-            ];
-
-            const visitedCountries = {
-                US: {
-                    name: "United States",
-                    url: "https://en.wikipedia.org/wiki/United_States"
-                },
-                CA: {
-                    name: "Canada",
-                    url: "https://en.wikipedia.org/wiki/Canada"
-                },
-                MX: {
-                    name: "Mexico",
-                    url: "https://en.wikipedia.org/wiki/Mexico"
-                }
-            };
-
-            const parksList = document.getElementById("parks-list");
-            const parksCount = document.getElementById("parks-count");
-
-            parksCount.textContent = `${nationalParks.length} parks visited`;
-
-            nationalParks.forEach(park => {
-                const li = document.createElement("li");
-
-                const link = document.createElement("a");
-                link.href = park.url;
-                link.textContent = park.name;
-                link.target = "_blank";
-                link.rel = "noopener noreferrer";
-
-                li.appendChild(link);
-                parksList.appendChild(li);
-            });
-
-            const countryList = document.getElementById("country-list");
-            const countriesCount = document.getElementById("countries-count");
-
-            const countryEntries = Object.values(visitedCountries).sort((a, b) =>
-                a.name.localeCompare(b.name)
-            );
-
-            countriesCount.textContent = `${countryEntries.length} countries visited`;
-
-            countryEntries.forEach(country => {
-                const li = document.createElement("li");
-
-                const link = document.createElement("a");
-                link.href = country.url;
-                link.textContent = country.name;
-                link.target = "_blank";
-                link.rel = "noopener noreferrer";
-
-                li.appendChild(link);
-                countryList.appendChild(li);
-            });
-
-            const visitedMapValues = {};
-
-            Object.keys(visitedCountries).forEach(code => {
-                visitedMapValues[code] = 1;
-            });
-
-            if (typeof jsVectorMap !== "undefined") {
-                new jsVectorMap({
-                    selector: "#world-map",
-                    map: "world",
-                    zoomButtons: true,
-                    regionStyle: {
-                        initial: {
-                            fill: "#2a3340",
-                            stroke: "#111827",
-                            strokeWidth: 1
-                        },
-                        hover: {
-                            fill: "#ff6b9d"
-                        }
-                    },
-                    series: {
-                        regions: [{
-                            attribute: "fill",
-                            values: visitedMapValues,
-                            scale: {
-                                1: "#4ecdc4"
-                            }
-                        }]
-                    }
-                });
-            } else {
-                document.getElementById("world-map").innerHTML =
-                    "<p style='padding: 2rem; color: #9da5b4;'>Map could not load.</p>";
-            }
-        });
-    </script>
 </body>
 </html>
