@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Parks - Nicole Mulvey</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet map CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">N.M.</a>
+                </div>
+
+                <nav>
+                    <a href="background.html">Background</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="experience.html">Experience</a>
+                    <a href="awards.html">Awards</a>
+                    <a href="misc.html" class="active">Misc</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section>
+                <h2 class="section-title">National Parks I’ve Visited</h2>
+
+                <p class="page-intro">
+                    One of my long-term goals is to visit every national park in the United States.
+                    This is a running list of the parks I’ve visited so far.
+                </p>
+
+                <div class="misc-card">
+                    <h3>Visited Parks</h3>
+                    <div class="misc-meta" id="parks-count"></div>
+                    <ul class="parks-list" id="parks-list"></ul>
+                </div>
+
+                <div class="misc-card">
+                    <h3>Map</h3>
+                    <div id="parks-map"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 Nicole Mulvey. Built with care.</p>
+        </footer>
+    </div>
+
+    <!-- Leaflet map JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        const nationalParks = [
+            {
+                name: "Yosemite",
+                url: "https://www.nps.gov/yose/index.htm",
+                lat: 37.8651,
+                lng: -119.5383
+            },
+            {
+                name: "Grand Canyon",
+                url: "https://www.nps.gov/grca/index.htm",
+                lat: 36.1069,
+                lng: -112.1129
+            },
+            {
+                name: "Zion",
+                url: "https://www.nps.gov/zion/index.htm",
+                lat: 37.2982,
+                lng: -113.0263
+            },
+            {
+                name: "Bryce Canyon",
+                url: "https://www.nps.gov/brca/index.htm",
+                lat: 37.5930,
+                lng: -112.1871
+            },
+            {
+                name: "Arches",
+                url: "https://www.nps.gov/arch/index.htm",
+                lat: 38.7331,
+                lng: -109.5925
+            },
+            {
+                name: "Canyonlands",
+                url: "https://www.nps.gov/cany/index.htm",
+                lat: 38.3269,
+                lng: -109.8783
+            },
+            {
+                name: "Rocky Mountain",
+                url: "https://www.nps.gov/romo/index.htm",
+                lat: 40.3428,
+                lng: -105.6836
+            },
+            {
+                name: "Grand Teton",
+                url: "https://www.nps.gov/grte/index.htm",
+                lat: 43.7904,
+                lng: -110.6818
+            },
+            {
+                name: "Yellowstone",
+                url: "https://www.nps.gov/yell/index.htm",
+                lat: 44.4280,
+                lng: -110.5885
+            },
+            {
+                name: "Olympic",
+                url: "https://www.nps.gov/olym/index.htm",
+                lat: 47.8021,
+                lng: -123.6044
+            },
+            {
+                name: "Mount Rainier",
+                url: "https://www.nps.gov/mora/index.htm",
+                lat: 46.8523,
+                lng: -121.7603
+            }
+        ];
+
+        const parksList = document.getElementById("parks-list");
+        const parksCount = document.getElementById("parks-count");
+
+        parksCount.textContent = `${nationalParks.length} parks visited`;
+
+        nationalParks.forEach(park => {
+            const li = document.createElement("li");
+            const link = document.createElement("a");
+
+            link.href = park.url;
+            link.textContent = park.name;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+
+            li.appendChild(link);
+            parksList.appendChild(li);
+        });
+
+        const map = L.map("parks-map").setView([39.5, -98.35], 4);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            maxZoom: 18,
+            attribution: "&copy; OpenStreetMap contributors"
+        }).addTo(map);
+
+        nationalParks.forEach(park => {
+            L.marker([park.lat, park.lng])
+                .addTo(map)
+                .bindPopup(`<a href="${park.url}" target="_blank" rel="noopener noreferrer">${park.name}</a>`);
+        });
+    </script>
+</body>
+</html>
