@@ -53,30 +53,34 @@
     </div>
 
     <script>
-        const visitedParks = [
-            "Arches",
-            "Bryce Canyon",
-            "Canyonlands",
-            "Grand Canyon",
-            "Grand Teton",
-            "Mount Rainier",
-            "Olympic",
-            "Rocky Mountain",
-            "Yellowstone",
-            "Yosemite",
-            "Zion"
-        ];
+    const visitedParks = [
+        "Arches",
+        "Bryce Canyon",
+        "Capitol Reef",
+        "Zion",
+        "White Sands",
+        "Grand Canyon",
+        "Petrified Forest",
+        "Redwood",
+        "Sequoia",
+        "Channel Islands",
+        "Joshua Tree",
+        "Pinnacles",
+        "Yosemite",
+        "Death Valley",
+        "Kings Canyon"
+    ];
 
-        const parksList = document.getElementById("parks-list");
-        const parksCount = document.getElementById("parks-count");
+    const parksList = document.getElementById("parks-list");
+    const parksCount = document.getElementById("parks-count");
 
-        parksCount.textContent = `${visitedParks.length} parks visited`;
+    parksCount.textContent = `${visitedParks.length} parks visited`;
 
-        visitedParks.forEach(park => {
-            const li = document.createElement("li");
-            li.textContent = park;
-            parksList.appendChild(li);
-        });
-    </script>
+    visitedParks.forEach(park => {
+        const li = document.createElement("li");
+        li.textContent = park;
+        parksList.appendChild(li);
+    });
+</script>
 </body>
 </html>
