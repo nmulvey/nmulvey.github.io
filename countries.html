@@ -77,17 +77,57 @@
 
     <script>
         const visitedCountries = {
-            US: {
-                name: "United States",
-                url: "https://en.wikipedia.org/wiki/United_States"
+            AT: {
+                name: "Austria",
+                url: "https://en.wikipedia.org/wiki/Austria"
             },
-            CA: {
-                name: "Canada",
-                url: "https://en.wikipedia.org/wiki/Canada"
+            AU: {
+                name: "Australia",
+                url: "https://en.wikipedia.org/wiki/Australia"
+            },
+            CR: {
+                name: "Costa Rica",
+                url: "https://en.wikipedia.org/wiki/Costa_Rica"
+            },
+            DK: {
+                name: "Denmark",
+                url: "https://en.wikipedia.org/wiki/Denmark"
+            },
+            FR: {
+                name: "France",
+                url: "https://en.wikipedia.org/wiki/France"
+            },
+            DE: {
+                name: "Germany",
+                url: "https://en.wikipedia.org/wiki/Germany"
+            },
+            GT: {
+                name: "Guatemala",
+                url: "https://en.wikipedia.org/wiki/Guatemala"
+            },
+            LI: {
+                name: "Liechtenstein",
+                url: "https://en.wikipedia.org/wiki/Liechtenstein"
             },
             MX: {
                 name: "Mexico",
                 url: "https://en.wikipedia.org/wiki/Mexico"
+            },
+            NZ: {
+                name: "New Zealand",
+                url: "https://en.wikipedia.org/wiki/New_Zealand"
+            },
+            CH: {
+                name: "Switzerland",
+                url: "https://en.wikipedia.org/wiki/Switzerland"
+            },
+            TH: {
+                name: "Thailand",
+                url: "https://en.wikipedia.org/wiki/Thailand"
+            },
+            US: {
+                name: "United States",
+                url: "https://en.wikipedia.org/wiki/United_States"
             }
         };
 
@@ -98,7 +138,8 @@
             a.name.localeCompare(b.name)
         );
 
-        countriesCount.textContent = `${countryEntries.length} countries visited`;
+        const countryWord = countryEntries.length === 1 ? "country" : "countries";
+        countriesCount.textContent = `${countryEntries.length} ${countryWord} visited`;
 
         countryEntries.forEach(country => {
             const li = document.createElement("li");
