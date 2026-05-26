@@ -1,633 +1,380 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="Lzbaixl2PglLuxX8cqBF577Jn_CmuRFoCZh-c8_TUoY" />
-    <title>Nicole Mulvey - Systems Security Researcher | Stanford University</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Nicole Mulvey is a Master's student in Electrical Engineering at Stanford University, specializing in systems security research, RISC-V architecture, and compiler-based sandboxing. Graduate researcher working on Lightweight Fault Isolation.">
-    <meta name="keywords" content="Nicole Mulvey, systems security, RISC-V, LLVM, Stanford University, computer security, electrical engineering, compiler research, lightweight fault isolation">
-    <meta name="author" content="Nicole Mulvey">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph Meta Tags (for social media sharing) -->
-    <meta property="og:title" content="Nicole Mulvey - Systems Security Researcher">
-    <meta property="og:description" content="Graduate researcher at Stanford University specializing in systems security, RISC-V architecture, and compiler-based sandboxing.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://nmulvey.github.io">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Nicole Mulvey - Systems Security Researcher">
-    <meta name="twitter:description" content="Graduate researcher at Stanford University specializing in systems security and RISC-V architecture.">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0a0e14;
-            --bg-secondary: #131920;
-            --bg-tertiary: #1a2129;
-            --accent-primary: #ff6b9d;
-            --accent-secondary: #4ecdc4;
-            --accent-tertiary: #ffd93d;
-            --text-primary: #e6e8eb;
-            --text-secondary: #9da5b4;
-            --text-muted: #6b7280;
-        }
+:root {
+    --bg-primary: #0a0e14;
+    --bg-secondary: #131920;
+    --bg-tertiary: #1a2129;
+    --accent-primary: #ff6b9d;
+    --accent-secondary: #4ecdc4;
+    --accent-tertiary: #ffd93d;
+    --text-primary: #e6e8eb;
+    --text-secondary: #9da5b4;
+    --text-muted: #6b7280;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Crimson Pro', serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
+body {
+    font-family: 'Crimson Pro', serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
 
-        /* Animated gradient background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 157, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 20%, rgba(255, 217, 61, 0.03) 0%, transparent 50%);
-            animation: gradientShift 20s ease infinite;
-            pointer-events: none;
-            z-index: -1;
-        }
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(255, 107, 157, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 217, 61, 0.03) 0%, transparent 50%);
+    animation: gradientShift 20s ease infinite;
+    pointer-events: none;
+    z-index: -1;
+}
 
-        @keyframes gradientShift {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(5%, 5%) rotate(120deg); }
-            66% { transform: translate(-5%, 5%) rotate(240deg); }
-        }
+@keyframes gradientShift {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+    33% {
+        transform: translate(5%, 5%) rotate(120deg);
+    }
 
-        /* Header */
-        header {
-            padding: 3rem 0;
-            position: relative;
-        }
+    66% {
+        transform: translate(-5%, 5%) rotate(240deg);
+    }
+}
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-        }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
 
-        nav a {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--text-secondary);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-size: 0.9rem;
-            letter-spacing: 0.05em;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+header {
+    padding: 3rem 0;
+}
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            transition: width 0.3s ease;
-        }
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeInUp 1s ease forwards;
+}
 
-        nav a:hover {
-            color: var(--text-primary);
-        }
+.logo a {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--accent-primary);
+    text-decoration: none;
+}
 
-        nav a:hover::after {
-            width: 100%;
-        }
+nav a {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-left: 2rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    position: relative;
+}
 
-        /* Hero Section */
-        .hero {
-            padding: 6rem 0 8rem;
-            position: relative;
-        }
+nav a:hover,
+nav a.active {
+    color: var(--text-primary);
+}
 
-        .hero-content {
-            max-width: 800px;
-        }
+nav a.active {
+    border-bottom: 2px solid var(--accent-primary);
+    padding-bottom: 0.4rem;
+}
 
-        .hero h1 {
-            font-size: 4.5rem;
-            font-weight: 600;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.2s forwards;
-        }
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -0.4rem;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    transition: width 0.3s ease;
+}
 
-        .gradient-text {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+nav a:hover::after {
+    width: 100%;
+}
 
-        .hero-description {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.4s forwards;
-        }
+.hero {
+    padding: 4rem 0 6rem;
+}
 
-        .tag-line {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--accent-secondary);
-            letter-spacing: 0.1em;
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards;
-        }
+.hero-content {
+    max-width: 760px;
+}
 
-        /* Section Styles */
-        section {
-            padding: 5rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
+.hero h1 {
+    font-size: 4.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 1s ease 0.2s both;
+}
 
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 3rem;
-            position: relative;
-            display: inline-block;
-        }
+.gradient-text {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-        }
+.hero-description {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s ease 0.4s both;
+    line-height: 1.8;
+}
 
-        /* Research Grid */
-        .research-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
+.tag-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent-secondary);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s ease 0.6s both;
+}
 
-        .research-card {
-            background: var(--bg-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 8px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
+section {
+    padding: 5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-        .research-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
-        }
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+}
 
-        .research-card:hover::before {
-            transform: scaleX(1);
-        }
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+}
 
-        .research-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 107, 157, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
+.page-intro {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    max-width: 850px;
+    margin-bottom: 3rem;
+}
 
-        .research-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
+.experience-item {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-        .research-card .tag {
-            display: inline-block;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            padding: 0.3rem 0.8rem;
-            background: rgba(255, 107, 157, 0.1);
-            color: var(--accent-primary);
-            border-radius: 4px;
-            margin-right: 0.5rem;
-            margin-bottom: 1rem;
-        }
+.experience-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 
-        .research-card p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
+.experience-item h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
 
-        /* Experience Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 3rem;
-            margin-top: 3rem;
-        }
+.experience-item .company {
+    color: var(--accent-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
-        }
+.experience-item .date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
 
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-            padding-left: 2rem;
-        }
+.experience-item p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+}
 
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -3.5rem;
-            top: 0.5rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            border: 3px solid var(--bg-primary);
-            box-shadow: 0 0 0 2px var(--accent-primary);
-        }
+.research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
 
-        .timeline-item h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
+.research-card {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 8px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
 
-        .timeline-item .company {
-            color: var(--accent-secondary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
+.research-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
 
-        .timeline-item .date {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
+.research-card:hover::before {
+    transform: scaleX(1);
+}
 
-        .timeline-item p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
+.research-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 107, 157, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
 
-        /* Skills */
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
+.research-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
 
-        .skill-pill {
-            font-family: 'JetBrains Mono', monospace;
-            padding: 0.8rem 1.5rem;
-            background: var(--bg-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            cursor: default;
-        }
+.research-card .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(255, 107, 157, 0.1);
+    color: var(--accent-primary);
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    margin-bottom: 1rem;
+}
 
-        .skill-pill:hover {
-            background: var(--bg-tertiary);
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-        }
+.research-card p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
 
-        /* Contact Section */
-        .contact-links {
-            display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
+a {
+    color: var(--accent-secondary);
+    text-decoration: none;
+    border-bottom: 2px solid var(--accent-secondary);
+    transition: all 0.3s ease;
+}
 
-        .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 0.8rem 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
+a:hover {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent-primary);
+}
 
-        .contact-link:hover {
-            color: var(--text-primary);
-            border-color: var(--accent-primary);
-            background: rgba(255, 107, 157, 0.05);
-            transform: translateY(-2px);
-        }
+.contact-links {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
 
-        /* Footer */
-        footer {
-            padding: 3rem 0;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.contact-link:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    background: rgba(255, 107, 157, 0.05);
+    transform: translateY(-2px);
+}
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
+footer {
+    padding: 3rem 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-            .hero-description {
-                font-size: 1.1rem;
-            }
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
 
-            nav a {
-                margin-left: 1rem;
-                font-size: 0.8rem;
-            }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-            .research-grid {
-                grid-template-columns: 1fr;
-            }
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
 
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="header-content">
-                <div class="logo">
-                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.2rem; color: var(--accent-primary);">N.M.</span>
-                </div>
-                <nav>
-                    <a href="#research">Research</a>
-                    <a href="#experience">Experience</a>
-                    <a href="#teaching">Teaching</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#awards">Awards</a>
-                    <a href="#contact">Contact</a>
-                </nav>
-            </div>
-        </header>
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Hi, I'm <span class="gradient-text">Nicole</span></h1>
-                <div class="tag-line">[ Graduate Researcher • Systems Security • RISC-V ]</div>
-                <p class="hero-description">
-                    I'm a Master's student in Electrical Engineering at Stanford University, working with <a href="https://www.scs.stanford.edu/~dm/" target="_blank" style="color: var(--accent-secondary); text-decoration: none; border-bottom: 2px solid var(--accent-secondary); transition: all 0.3s ease;">Professor David Mazières</a> on systems security research. I'm interested in compiler-based sandboxing, operating systems, and building secure software systems.
-                </p>
-            </div>
-        </section>
+    nav a {
+        margin-left: 0;
+        font-size: 0.8rem;
+    }
 
-        <section id="research">
-            <h2 class="section-title">Research</h2>
-            <div class="research-grid">
-                <div class="research-card">
-                    <h3>RISC-V Lightweight Fault Isolation</h3>
-                    <div>
-                        <span class="tag">LLVM</span>
-                        <span class="tag">RISC-V</span>
-                        <span class="tag">Memory Safety</span>
-                    </div>
-                    <p>
-                        Leading the RISC-V port of Lightweight Fault Isolation, which enforces memory safety at the OS level through compiler-based validation. Modified LLVM's backend to generate code satisfying security invariants and built runtime sandboxing infrastructure. Presented at RISC-V Summit 2025.
-                    </p>
-                </div>
-                <div class="research-card">
-                    <h3>Carbon Emissions Analysis of AI Chips</h3>
-                    <div>
-                        <span class="tag">Honors Thesis</span>
-                        <span class="tag">Sustainability</span>
-                        <span class="tag">Hardware</span>
-                    </div>
-                    <p>
-                        Conducted an in-depth comparison between carbon emissions of digital AI chips and analog-in-memory chips. Analyzed energy consumption, environmental impacts, and efficiency, providing insights into the ecological footprint of different chip technologies.
-                    </p>
-                </div>
-                <div class="research-card">
-                    <h3>Solar Array Fault Detection</h3>
-                    <div>
-                        <span class="tag">Machine Learning</span>
-                        <span class="tag">K-means</span>
-                        <span class="tag">ASU SenSIP</span>
-                    </div>
-                    <p>
-                        Developed a machine learning program using K-means algorithm capable of detecting 9 different faults in solar panels. Collaborated with a team to build a computer-controlled load for solar array experiments.
-                    </p>
-                </div>
-            </div>
-        </section>
+    .hero h1 {
+        font-size: 3rem;
+    }
 
-        <section id="experience">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Graduate Research Assistant</h3>
-                    <div class="company">Stanford Secure Computer Systems Group</div>
-                    <div class="date">June 2025 - Present</div>
-                    <p>Leading the RISC-V port of Lightweight Fault Isolation. Modified LLVM's backend to generate secure code, implemented argument enforcement for compressed instructions, and built runtime sandboxing infrastructure including boundary crossings and system call mediation.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Software Engineer Intern</h3>
-                    <div class="company">IBM</div>
-                    <div class="date">May 2024 - August 2024</div>
-                    <p>Developed DBA Assist, an advanced AI chatbot using Python, HuggingFace, and Llama 3, seamlessly integrating with IBM DB2. Achieved a 20% reduction in processing time and showcased to Senior VPs of Software and CEO of GEM Fellowship.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Low Voltage Test Engineer Intern</h3>
-                    <div class="company">Tesla</div>
-                    <div class="date">February 2024 - May 2024</div>
-                    <p>Conducted setup and integration testing for a telematics processor with WiFi, Bluetooth, and Cellular chips. Created Python tests to enhance coverage for CAN transceivers in Tesla's Autopilot computer, identifying manufacturing issues.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Digital Design Engineer Intern</h3>
-                    <div class="company">Texas Instruments</div>
-                    <div class="date">May 2023 - August 2023</div>
-                    <p>Contributed to over 30 test benches, significantly improving debugging and system performance of a temperature sensor. Authored a detailed verification plan to identify potential issues early in chip development.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Facilities Engineer Intern</h3>
-                    <div class="company">Texas Instruments</div>
-                    <div class="date">May 2022 - August 2022</div>
-                    <p>Converted DIW Loop and Hot DIW Particle Monitors to Wago PLC using Codeseys. Analyzed voltage sag impact on tools, determining corrective actions that led to over $2.2 million in savings.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Control Engineer Intern</h3>
-                    <div class="company">General Motors</div>
-                    <div class="date">May 2021 - August 2021</div>
-                    <p>Utilized PLC to integrate a new VFD system and convert from Logix5 to Logix5000 in one month. Created a program to time-sync ASH houses in General Assembly.</p>
-                </div>
-            </div>
-        </section>
+    .hero-description {
+        font-size: 1.1rem;
+    }
 
-        <section id="teaching">
-            <h2 class="section-title">Teaching Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Graduate Teaching Assistant</h3>
-                    <div class="company">Stanford University School of Engineering</div>
-                    <div class="date">September 2024 - June 2025</div>
-                    <p><strong>EE 108: Digital System Design</strong> - Led weekly problem-solving sessions, guiding students through practice problems and reinforcing key concepts. Provided academic support through office hours, helping students with homework, lab assignments, and clarifying complex concepts.</p>
-                    <p style="margin-top: 1rem;"><strong>ENGR 108: Introduction to Matrix Methods</strong> - Held weekly office hours to assist students with homework problems in Applied Linear Algebra and Julia. Led weekly sections guiding students through complex mathematical concepts and enhancing understanding of theoretical and practical applications.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Undergraduate Teaching Assistant</h3>
-                    <div class="company">Arizona State University</div>
-                    <div class="date">January 2023 - December 2023</div>
-                    <p><strong>EEE 335: Analog and Digital Circuits</strong> - Assisted professor in guiding, teaching, and preparing lessons. Held weekly office hours to assist students with homework problems in both digital and analog circuits. Revised and reviewed Cadence laboratories to better clarify and assist students.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Electrical Engineering Lead Tutor</h3>
-                    <div class="company">Arizona State University</div>
-                    <div class="date">August 2021 - December 2023</div>
-                    <p>Tutored over 300 students per semester in courses ranging from freshman-level calculus to senior-level circuit design. Developed 3 trainings per semester to refresh tutors on high-traffic courses and presented them.</p>
-                </div>
-            </div>
-        </section>
+    .research-grid {
+        grid-template-columns: 1fr;
+    }
 
-        <section id="projects">
-            <h2 class="section-title">Selected Projects</h2>
-            <div class="research-grid">
-                <div class="research-card">
-                    <h3>Pintos Operating System</h3>
-                    <div>
-                        <span class="tag">C</span>
-                        <span class="tag">OS Development</span>
-                        <span class="tag">Stanford</span>
-                    </div>
-                    <p>
-                        Developed core operating system components including threading, synchronization, user programs, virtual memory, and file systems in C.
-                    </p>
-                </div>
-                <div class="research-card">
-                    <h3>Bare-Metal RISC-V Computer</h3>
-                    <div>
-                        <span class="tag">RISC-V Assembly</span>
-                        <span class="tag">Embedded Systems</span>
-                    </div>
-                    <p>
-                        Built a bare-metal RISC-V system on a Mango Pi from scratch, mastering assembly language, memory management, and peripheral control. Developed a custom C-based shell for a fully functional personal computer.
-                    </p>
-                </div>
-                <div class="research-card">
-                    <h3>Python UI for VMM2 Chip</h3>
-                    <div>
-                        <span class="tag">Python Flask</span>
-                        <span class="tag">Sandia National Labs</span>
-                    </div>
-                    <p>
-                        Collaborated in a team of four to create a Python Flask app and HTML interface for researchers at Sandia National Laboratories. Achieved functional proof of concept for device conductance measurement toward neural network deployment.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="awards">
-            <h2 class="section-title">Awards & Recognition</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Impact Award</h3>
-                    <div class="company">Fulton Schools of Engineering, Arizona State University</div>
-                    <div class="date">2023</div>
-                    <p>Recognized for outstanding impact in the engineering community.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Outstanding Graduate Award</h3>
-                    <div class="company">Fulton Schools of Engineering, Arizona State University</div>
-                    <div class="date">2023</div>
-                    <p>Awarded for exceptional academic achievement and contributions to electrical engineering.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Selected for Philosophy Conference</h3>
-                    <div class="company">Arizona State University</div>
-                    <div class="date">2019</div>
-                    <p>Selected from 30 students to present research paper on computer cognition.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-links">
-                <a href="https://github.com/nmulvey" class="contact-link" target="_blank">
-                    <span>→</span> GitHub
-                </a>
-                <a href="https://linkedin.com/in/nicole-mulvey" class="contact-link" target="_blank">
-                    <span>→</span> LinkedIn
-                </a>
-                <a href="/cdn-cgi/l/email-protection#b0deddc5dcc6d5c98182f0d7ddd1d9dc9ed3dfdd" class="contact-link">
-                    <span>→</span> Email
-                </a>
-                <a href="#" class="contact-link">
-                    <span>→</span> CV/Resume
-                </a>
-            </div>
-        </section>
-
-        <footer>
-            <p>© 2026 Nicole Mulvey. Bu
+    .section-title {
+        font-size: 2rem;
+    }
+}
