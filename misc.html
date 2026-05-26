@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Map CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css">
 </head>
 
@@ -79,145 +78,151 @@
         </footer>
     </div>
 
-    <!-- Map JS -->
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
 
     <script>
-        const nationalParks = [
-            {
-                name: "Yosemite",
-                url: "https://www.nps.gov/yose/index.htm"
-            },
-            {
-                name: "Grand Canyon",
-                url: "https://www.nps.gov/grca/index.htm"
-            },
-            {
-                name: "Zion",
-                url: "https://www.nps.gov/zion/index.htm"
-            },
-            {
-                name: "Bryce Canyon",
-                url: "https://www.nps.gov/brca/index.htm"
-            },
-            {
-                name: "Arches",
-                url: "https://www.nps.gov/arch/index.htm"
-            },
-            {
-                name: "Canyonlands",
-                url: "https://www.nps.gov/cany/index.htm"
-            },
-            {
-                name: "Rocky Mountain",
-                url: "https://www.nps.gov/romo/index.htm"
-            },
-            {
-                name: "Banff",
-                url: "https://parks.canada.ca/pn-np/ab/banff"
-            },
-            {
-                name: "Grand Teton",
-                url: "https://www.nps.gov/grte/index.htm"
-            },
-            {
-                name: "Yellowstone",
-                url: "https://www.nps.gov/yell/index.htm"
-            },
-            {
-                name: "Olympic",
-                url: "https://www.nps.gov/olym/index.htm"
-            },
-            {
-                name: "Mount Rainier",
-                url: "https://www.nps.gov/mora/index.htm"
-            }
-        ];
-
-        const visitedCountries = {
-            US: {
-                name: "United States",
-                url: "https://en.wikipedia.org/wiki/United_States"
-            },
-            CA: {
-                name: "Canada",
-                url: "https://en.wikipedia.org/wiki/Canada"
-            },
-            MX: {
-                name: "Mexico",
-                url: "https://en.wikipedia.org/wiki/Mexico"
-            }
-        };
-
-        const parksList = document.getElementById("parks-list");
-        const parksCount = document.getElementById("parks-count");
-
-        parksCount.textContent = `${nationalParks.length} parks visited`;
-
-        nationalParks.forEach(park => {
-            const li = document.createElement("li");
-
-            const link = document.createElement("a");
-            link.href = park.url;
-            link.textContent = park.name;
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-
-            li.appendChild(link);
-            parksList.appendChild(li);
-        });
-
-        const countryList = document.getElementById("country-list");
-        const countriesCount = document.getElementById("countries-count");
-
-        const countryEntries = Object.values(visitedCountries).sort((a, b) =>
-            a.name.localeCompare(b.name)
-        );
-
-        countriesCount.textContent = `${countryEntries.length} countries visited`;
-
-        countryEntries.forEach(country => {
-            const li = document.createElement("li");
-
-            const link = document.createElement("a");
-            link.href = country.url;
-            link.textContent = country.name;
-            link.target = "_blank";
-            link.rel = "noopener noreferrer";
-
-            li.appendChild(link);
-            countryList.appendChild(li);
-        });
-
-        const visitedMapValues = {};
-
-        Object.keys(visitedCountries).forEach(code => {
-            visitedMapValues[code] = 1;
-        });
-
-        new jsVectorMap({
-            selector: "#world-map",
-            map: "world",
-            zoomButtons: true,
-            regionStyle: {
-                initial: {
-                    fill: "#2a3340",
-                    stroke: "#111827",
-                    strokeWidth: 1
+        document.addEventListener("DOMContentLoaded", function () {
+            const nationalParks = [
+                {
+                    name: "Yosemite",
+                    url: "https://www.nps.gov/yose/index.htm"
                 },
-                hover: {
-                    fill: "#ff6b9d"
+                {
+                    name: "Grand Canyon",
+                    url: "https://www.nps.gov/grca/index.htm"
+                },
+                {
+                    name: "Zion",
+                    url: "https://www.nps.gov/zion/index.htm"
+                },
+                {
+                    name: "Bryce Canyon",
+                    url: "https://www.nps.gov/brca/index.htm"
+                },
+                {
+                    name: "Arches",
+                    url: "https://www.nps.gov/arch/index.htm"
+                },
+                {
+                    name: "Canyonlands",
+                    url: "https://www.nps.gov/cany/index.htm"
+                },
+                {
+                    name: "Rocky Mountain",
+                    url: "https://www.nps.gov/romo/index.htm"
+                },
+                {
+                    name: "Banff",
+                    url: "https://parks.canada.ca/pn-np/ab/banff"
+                },
+                {
+                    name: "Grand Teton",
+                    url: "https://www.nps.gov/grte/index.htm"
+                },
+                {
+                    name: "Yellowstone",
+                    url: "https://www.nps.gov/yell/index.htm"
+                },
+                {
+                    name: "Olympic",
+                    url: "https://www.nps.gov/olym/index.htm"
+                },
+                {
+                    name: "Mount Rainier",
+                    url: "https://www.nps.gov/mora/index.htm"
                 }
-            },
-            series: {
-                regions: [{
-                    attribute: "fill",
-                    values: visitedMapValues,
-                    scale: {
-                        1: "#4ecdc4"
+            ];
+
+            const visitedCountries = {
+                US: {
+                    name: "United States",
+                    url: "https://en.wikipedia.org/wiki/United_States"
+                },
+                CA: {
+                    name: "Canada",
+                    url: "https://en.wikipedia.org/wiki/Canada"
+                },
+                MX: {
+                    name: "Mexico",
+                    url: "https://en.wikipedia.org/wiki/Mexico"
+                }
+            };
+
+            const parksList = document.getElementById("parks-list");
+            const parksCount = document.getElementById("parks-count");
+
+            parksCount.textContent = `${nationalParks.length} parks visited`;
+
+            nationalParks.forEach(park => {
+                const li = document.createElement("li");
+
+                const link = document.createElement("a");
+                link.href = park.url;
+                link.textContent = park.name;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+
+                li.appendChild(link);
+                parksList.appendChild(li);
+            });
+
+            const countryList = document.getElementById("country-list");
+            const countriesCount = document.getElementById("countries-count");
+
+            const countryEntries = Object.values(visitedCountries).sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+
+            countriesCount.textContent = `${countryEntries.length} countries visited`;
+
+            countryEntries.forEach(country => {
+                const li = document.createElement("li");
+
+                const link = document.createElement("a");
+                link.href = country.url;
+                link.textContent = country.name;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+
+                li.appendChild(link);
+                countryList.appendChild(li);
+            });
+
+            const visitedMapValues = {};
+
+            Object.keys(visitedCountries).forEach(code => {
+                visitedMapValues[code] = 1;
+            });
+
+            if (typeof jsVectorMap !== "undefined") {
+                new jsVectorMap({
+                    selector: "#world-map",
+                    map: "world",
+                    zoomButtons: true,
+                    regionStyle: {
+                        initial: {
+                            fill: "#2a3340",
+                            stroke: "#111827",
+                            strokeWidth: 1
+                        },
+                        hover: {
+                            fill: "#ff6b9d"
+                        }
+                    },
+                    series: {
+                        regions: [{
+                            attribute: "fill",
+                            values: visitedMapValues,
+                            scale: {
+                                1: "#4ecdc4"
+                            }
+                        }]
                     }
-                }]
+                });
+            } else {
+                document.getElementById("world-map").innerHTML =
+                    "<p style='padding: 2rem; color: #9da5b4;'>Map could not load.</p>";
             }
         });
     </script>
