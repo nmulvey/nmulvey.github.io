@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Nicole Mulvey</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">N.M.</a>
+                </div>
+
+                <nav>
+                    <a href="background.html">Background</a>
+                    <a href="projects.html" class="active">Projects</a>
+                    <a href="experience.html">Experience</a>
+                    <a href="awards.html">Awards</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section>
+                <h2 class="section-title">Current Work</h2>
+
+                <div class="research-grid">
+                    <div class="research-card">
+                        <h3>RISC-V Lightweight Fault Isolation</h3>
+
+                        <div>
+                            <span class="tag">LLVM</span>
+                            <span class="tag">RISC-V</span>
+                            <span class="tag">Memory Safety</span>
+                        </div>
+
+                        <p>
+                            Leading the RISC-V port of Lightweight Fault Isolation, which enforces memory safety at the OS level through compiler-based validation.
+                            Modified LLVM's backend to generate code satisfying security invariants and built runtime sandboxing infrastructure.
+                            Presented at RISC-V Summit 2025.
+                        </p>
+                    </div>
+
+                    <div class="research-card">
+                        <h3>wasm2c Overhead on Embedded Systems</h3>
+
+                        <div>
+                            <span class="tag">WebAssembly</span>
+                            <span class="tag">RISC-V</span>
+                            <span class="tag">Benchmarking</span>
+                        </div>
+
+                        <p>
+                            Systematically benchmarking wasm2c compiled code on 32-bit RISC-V embedded systems to characterize bounds-checking overhead.
+                            Using QEMU with hardware counters to profile optimizations in GCC and Clang.
+                        </p>
+                    </div>
+
+                    <div class="research-card">
+                        <h3>Carbon Emissions Analysis of AI Chips</h3>
+
+                        <div>
+                            <span class="tag">Honors Thesis</span>
+                            <span class="tag">Sustainability</span>
+                            <span class="tag">Hardware</span>
+                        </div>
+
+                        <p>
+                            Conducted an in-depth comparison between carbon emissions of digital AI chips and analog-in-memory chips.
+                            Analyzed energy consumption, environmental impacts, and efficiency.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">Side Projects</h2>
+
+                <div class="research-grid">
+                    <div class="research-card">
+                        <h3>Pintos Operating System</h3>
+
+                        <div>
+                            <span class="tag">C</span>
+                            <span class="tag">OS Development</span>
+                            <span class="tag">Stanford</span>
+                        </div>
+
+                        <p>
+                            Developed core operating system components including threading, synchronization, user programs, virtual memory, and file systems in C.
+                            Teaching Assistant for CS 212.
+                        </p>
+                    </div>
+
+                    <div class="research-card">
+                        <h3>Bare-Metal RISC-V Computer</h3>
+
+                        <div>
+                            <span class="tag">RISC-V Assembly</span>
+                            <span class="tag">Embedded Systems</span>
+                        </div>
+
+                        <p>
+                            Built a bare-metal RISC-V system on a Mango Pi from scratch, working with assembly language, memory management,
+                            peripheral control, and a custom C-based shell.
+                        </p>
+                    </div>
+
+                    <div class="research-card">
+                        <h3>Python UI for VMM2 Chip</h3>
+
+                        <div>
+                            <span class="tag">Python Flask</span>
+                            <span class="tag">Sandia National Labs</span>
+                        </div>
+
+                        <p>
+                            Collaborated in a team of four to create a Python Flask app and HTML interface for researchers at Sandia National Laboratories.
+                            Achieved functional proof of concept for device conductance measurement toward neural network deployment.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 Nicole Mulvey. Built with care.</p>
+        </footer>
+    </div>
+</body>
+</html>
