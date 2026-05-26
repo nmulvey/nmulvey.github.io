@@ -8,6 +8,10 @@
     --text-primary: #e6e8eb;
     --text-secondary: #9da5b4;
     --text-muted: #6b7280;
+    --map-green: #9fc58f;
+    --map-green-dark: #5f7f55;
+    --map-visited: #ff6b9d;
+    --map-unvisited: #31402e;
 }
 
 * {
@@ -58,6 +62,10 @@ body::before {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+}
+
+.wide-container {
+    max-width: 1500px;
 }
 
 header {
@@ -336,13 +344,6 @@ footer {
 
 /* Misc pages */
 
-.misc-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
 .misc-card {
     background: var(--bg-secondary);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -375,6 +376,10 @@ footer {
     transform: translateY(-3px);
     border-color: rgba(255, 107, 157, 0.2);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.map-card:hover {
+    transform: none;
 }
 
 .misc-card h3 {
@@ -499,35 +504,123 @@ footer {
     border-bottom: none;
 }
 
-.map-wrapper {
-    margin-top: 1.5rem;
-}
+/* Poster-style USA national parks map */
 
-#world-map {
+.poster-map {
+    position: relative;
     width: 100%;
-    height: 500px;
+    aspect-ratio: 16 / 9;
+    max-height: 760px;
+    min-height: 500px;
+    background: #f4f2df;
     border-radius: 8px;
     overflow: hidden;
-    background: var(--bg-tertiary);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-#world-map-large {
-    width: 100%;
-    height: 700px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--bg-tertiary);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+.poster-title {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 3;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(1.2rem, 2.4vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #3a2d1c;
+    text-transform: uppercase;
 }
 
-#parks-map {
+.usa-map-base {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 650px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--bg-tertiary);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: 100%;
+}
+
+.main-us,
+.alaska,
+.hawaii {
+    fill: var(--map-green);
+    stroke: #ffffff;
+    stroke-width: 7;
+    stroke-linejoin: round;
+}
+
+.state-lines path {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 4;
+    stroke-linecap: round;
+    opacity: 0.95;
+}
+
+#park-markers {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+}
+
+.park-tree {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    border-bottom: none;
+    z-index: 5;
+}
+
+.tree-top {
+    color: var(--map-unvisited);
+    font-size: clamp(0.8rem, 1.35vw, 1.35rem);
+    line-height: 0.8;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.tree-trunk {
+    width: 3px;
+    height: 8px;
+    background: #4b301b;
+    margin-top: -1px;
+    border-radius: 1px;
+}
+
+.park-tree.visited .tree-top {
+    color: var(--map-visited);
+    text-shadow:
+        0 0 5px rgba(255, 107, 157, 0.75),
+        0 0 10px rgba(255, 107, 157, 0.4);
+}
+
+.park-tree:hover {
+    transform: translate(-50%, -50%) scale(1.25);
+    z-index: 20;
+}
+
+.park-label {
+    position: absolute;
+    top: 1.35rem;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.48rem, 0.75vw, 0.72rem);
+    font-weight: 700;
+    color: #332515;
+    background: rgba(244, 242, 223, 0.92);
+    border: 1px solid rgba(51, 37, 21, 0.15);
+    padding: 0.12rem 0.25rem;
+    border-radius: 3px;
+    opacity: 1;
+    pointer-events: none;
+}
+
+.park-tree.visited .park-label {
+    color: #8a2550;
 }
 
 .legend {
@@ -560,22 +653,40 @@ footer {
     background: #2a3340;
 }
 
+.legend-tree {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.visited-tree {
+    color: var(--map-visited);
+}
+
+.not-visited-tree {
+    color: var(--map-unvisited);
+}
+
+/* Countries map */
+
+.map-wrapper {
+    margin-top: 1.5rem;
+}
+
+#world-map-large {
+    width: 100%;
+    height: 700px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .jvm-tooltip {
     background: var(--bg-secondary) !important;
     color: var(--text-primary) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 0.8rem !important;
-}
-
-.leaflet-popup-content a {
-    color: #0a0e14;
-    border-bottom: none;
-    font-weight: 600;
-}
-
-.leaflet-container {
-    font-family: 'Crimson Pro', serif;
 }
 
 /* Animations */
@@ -637,14 +748,25 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    #world-map,
-    #world-map-large,
-    #parks-map {
+    .poster-map {
+        min-height: 430px;
+        overflow-x: auto;
+    }
+
+    #world-map-large {
         height: 450px;
     }
 
     .misc-card,
     .misc-big-link {
         padding: 1.5rem;
+    }
+
+    .park-label {
+        opacity: 0;
+    }
+
+    .park-tree:hover .park-label {
+        opacity: 1;
     }
 }
